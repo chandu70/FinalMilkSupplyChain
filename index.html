@@ -1,0 +1,52 @@
+<!DOCTYPE html> 
+<html> 
+  
+<head> 
+    <title>Registration Form</title> 
+    <link rel="stylesheet" 
+          href="style.css"> 
+          <script src="https://cdn.jsdelivr.net/gh/ethereum/web3.js@1.0.0-beta.36/dist/web3.min.js" crossorigin="anonymous"></script>
+</head> 
+  
+<body> 
+    <div class="main"> 
+        <h1>Registration Page</h1> 
+            <label for="first">User Name:</label> 
+            <input type="text" id="first" 
+                   placeholder="Enter your User name" > 
+  
+            <label for="last">Milk Man Id:</label> 
+            <input type="text" id="last" 
+                   placeholder="Enter your Milk Packet Id" > 
+                   <button onclick="connectContract()">Click to Connect</button>
+                   <p id="ContractArea"></p>
+                   <label for="User">Choose a User:</label>
+<select name="user" id="User">
+  <option value="milkman">Milkman</option>
+  <option value="coop">Cooperator</option>
+  <option value="retail">Retailer</option>
+
+</select>
+                   <button  onclick="registerUser()">Submit</button>
+                   <p id="submitdetails"></p>
+
+                   <button onclick="readContract()">GET DATA FROM CONTRACT</button>
+                    <input type="text" id="getAddress">
+                    <p id="dataArea"></p>
+                    <button ><a href="./Collectmilk.html">Login</a></button>     
+                    <button ><a href="./RecordMilk.html">LoginCoop</a></button>     
+                    <button ><a href="./AuditMilk.html">Audit</a></button>     
+                    <button ><a href="./RetailMilk.html">Retail</a></button>     
+
+
+
+                </div> 
+        <script src="./index.js"></script>
+   
+</body> 
+  
+</html>
+
+
+
+

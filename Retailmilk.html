@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Audit Details</title>
+  <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
+</head>
+<body>
+  <h1>RetailDetails</h1>
+
+  <button onClick="connect()">Connect to Metamask</button>
+  <p id="contractArea"></p>
+  <button onClick="connectContract()">Connect to Contract</button>
+  <p id="contrcatStatus"></p>
+  <button onclick="getuIDR()">Get Unique milk ID</button>
+  <input type="number" id="milkNum">
+  <p id="milkArea"></p>
+    <label for="uID">Unique ID:</label>
+    <input type="text" id="uID" name="uID" required><br>
+  
+    <label for="retailerID">Retailer ID:</label>
+    <input type="text" id="retailerID" name="retailerID" required><br>
+  
+    <label for="pH">pH:</label>
+    <input type="number" id="pH" name="pH" required><br>
+  
+    <label for="temp">Temperature:</label>
+    <input type="number" id="temp" name="temp" required><br>
+  
+    <label for="price">Price:</label>
+    <input type="number" id="price" name="price" required><br>
+  
+    <button onclick="retail()">Retaildetails</button>
+    <script>
+        const retail=async()=>{
+    let uID = document.getElementById("uID").value;
+  const retailerID = document.getElementById("retailerID").value;
+  const pH = parseInt(document.getElementById("pH").value);
+  const temp = parseInt(document.getElementById("temp").value);
+  const price = parseInt(document.getElementById("price").value);
+  uID=web3.utils.asciiToHex(uID);
+   await window.contract.methods.retailerDetails(web3.utils.hexToAscii(uID),retailerID,pH,temp,price).send({from:account,gas:4000000});
+}
+        let account;
+    const connect=async()=>{
+        
+    if(window.ethereum!=="undefined"){
+        const accounts=await ethereum.request({method:"eth_requestAccounts"});
+        account=accounts[0];
+        document.getElementById("contractArea").innerHTML=account;
+    }
+}
+const connectContract=async()=>{
+    
+    const ABI=
+    [
+{
+    "inputs": [],
+    "stateMutability": "nonpayable",
+    "type": "constructor"
+},
+{
+    "anonymous": false,
+    "inputs": [
+        {
+            "indexed": false,
+            "internalType": "bytes32",
+            "name": "upc",
+            "type": "bytes32"
+        }
+    ],
+    "name": "Audited",
+    "type": "event"
+},
+{
+    "anonymous": false,
+    "inputs": [
+        {
+            "indexed": false,
+            "internalType": "bytes32",
+            "name": "upc",
+            "type": "bytes32"
+        }
+    ],
+    "name": "Bought",
+    "type": "event"
+},
+{
+    "anonymous": false,
+    "inputs": [
+        {
+            "indexed": false,
+            "internalType": "bytes32",
+            "name": "upc",
+            "type": "bytes32"
+        }
+    ],
+    "name": "Collected",
+    "type": "event"
+},
+{
+    "anonymous": false,
+    "inputs": [
+        {
+            "indexed": false,
+            "internalType": "bytes32",
+            "name": "upc",
+            "type": "bytes32"
+        }
+    ],
+    "name": "Recorded",
+    "type": "event"
+},
+{
+    "anonymous": false,
+    "inputs": [
+        {
+            "indexed": false,
+            "internalType": "bytes32",
+            "name": "upc",
+            "type": "bytes32"
+        }
+    ],
+    "name": "Retailed",
+    "type": "event"
+},
+{
+    "inputs": [
+        {
+            "internalType": "address",
+            "name": "_copID",
+            "type": "address"
+        },
+        {
+            "internalType": "bytes32",
+            "name": "uID",
+            "type": "bytes32"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_pH",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_temp",
+            "type": "uint256"
+        }
+    ],
+    "name": "auditdetails",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "bytes32",
+            "name": "_unum",
+            "type": "bytes32"
+        },
+        {
+            "internalType": "address",
+            "name": "_milkmanID",
+            "type": "address"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_pH",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_temp",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_price",
+            "type": "uint256"
+        },
+        {
+            "internalType": "string",
+            "name": "_cattledetails",
+            "type": "string"
+        },
+        {
+            "internalType": "string",
+            "name": "_originlocat",
+            "type": "string"
+        }
+    ],
+    "name": "collectMilk",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "address",
+            "name": "bal",
+            "type": "address"
+        }
+    ],
+    "name": "getBalance",
+    "outputs": [
+        {
+            "internalType": "uint256",
+            "name": "",
+            "type": "uint256"
+        }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "bytes32",
+            "name": "uID",
+            "type": "bytes32"
+        }
+    ],
+    "name": "getMilkDetails",
+    "outputs": [
+        {
+            "internalType": "string",
+            "name": "_originlocation",
+            "type": "string"
+        },
+        {
+            "internalType": "string",
+            "name": "_cattledetails",
+            "type": "string"
+        },
+        {
+            "internalType": "uint256[4]",
+            "name": "pH",
+            "type": "uint256[4]"
+        },
+        {
+            "internalType": "uint256[4]",
+            "name": "temp",
+            "type": "uint256[4]"
+        },
+        {
+            "internalType": "uint256[3]",
+            "name": "",
+            "type": "uint256[3]"
+        }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "address",
+            "name": "_milkman",
+            "type": "address"
+        }
+    ],
+    "name": "getMilkmandetails",
+    "outputs": [
+        {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+        }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "bytes32",
+            "name": "uID",
+            "type": "bytes32"
+        }
+    ],
+    "name": "getSupplychaindetails",
+    "outputs": [
+        {
+            "internalType": "address",
+            "name": "_milkmanID",
+            "type": "address"
+        },
+        {
+            "internalType": "string",
+            "name": "_milkmanName",
+            "type": "string"
+        },
+        {
+            "internalType": "address",
+            "name": "_copID",
+            "type": "address"
+        },
+        {
+            "internalType": "string",
+            "name": "_copName",
+            "type": "string"
+        },
+        {
+            "internalType": "address",
+            "name": "_retailerID",
+            "type": "address"
+        },
+        {
+            "internalType": "string",
+            "name": "_retailerName",
+            "type": "string"
+        },
+        {
+            "internalType": "string",
+            "name": "state",
+            "type": "string"
+        }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "uint256",
+            "name": "unumber",
+            "type": "uint256"
+        }
+    ],
+    "name": "getUniquemilkID",
+    "outputs": [
+        {
+            "internalType": "bytes32",
+            "name": "",
+            "type": "bytes32"
+        }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "address",
+            "name": "_retailer",
+            "type": "address"
+        }
+    ],
+    "name": "getretailerdetails",
+    "outputs": [
+        {
+            "internalType": "string",
+            "name": "",
+            "type": "string"
+        }
+    ],
+    "stateMutability": "view",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "bytes32",
+            "name": "_milkID",
+            "type": "bytes32"
+        },
+        {
+            "internalType": "address payable",
+            "name": "_receiver",
+            "type": "address"
+        }
+    ],
+    "name": "paytoCop",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "bytes32",
+            "name": "_milkID",
+            "type": "bytes32"
+        },
+        {
+            "internalType": "address payable",
+            "name": "_receiver",
+            "type": "address"
+        }
+    ],
+    "name": "paytoMilkman",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "bytes32",
+            "name": "_milkID",
+            "type": "bytes32"
+        },
+        {
+            "internalType": "address payable",
+            "name": "_receiver",
+            "type": "address"
+        }
+    ],
+    "name": "paytoretailer",
+    "outputs": [],
+    "stateMutability": "payable",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "uint256",
+            "name": "unumber",
+            "type": "uint256"
+        }
+    ],
+    "name": "putUniquemilkID",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "bytes32",
+            "name": "unum",
+            "type": "bytes32"
+        },
+        {
+            "internalType": "address",
+            "name": "_copID",
+            "type": "address"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_price",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_pH",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_temp",
+            "type": "uint256"
+        }
+    ],
+    "name": "recorddetails",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "string",
+            "name": "_milkmanName",
+            "type": "string"
+        },
+        {
+            "internalType": "address",
+            "name": "_milkmanID",
+            "type": "address"
+        }
+    ],
+    "name": "registerMilkman",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "string",
+            "name": "_copName",
+            "type": "string"
+        },
+        {
+            "internalType": "address",
+            "name": "_copID",
+            "type": "address"
+        }
+    ],
+    "name": "registercop",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "string",
+            "name": "_custName",
+            "type": "string"
+        },
+        {
+            "internalType": "address",
+            "name": "_cusID",
+            "type": "address"
+        }
+    ],
+    "name": "registercustomer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "string",
+            "name": "_retailerName",
+            "type": "string"
+        },
+        {
+            "internalType": "address",
+            "name": "_retailerID",
+            "type": "address"
+        }
+    ],
+    "name": "registerretailer",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+},
+{
+    "inputs": [
+        {
+            "internalType": "bytes32",
+            "name": "uID",
+            "type": "bytes32"
+        },
+        {
+            "internalType": "address",
+            "name": "_retailerID",
+            "type": "address"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_pH",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_temp",
+            "type": "uint256"
+        },
+        {
+            "internalType": "uint256",
+            "name": "_price",
+            "type": "uint256"
+        }
+    ],
+    "name": "retailerDetails",
+    "outputs": [],
+    "stateMutability": "nonpayable",
+    "type": "function"
+}
+];
+const address="0x9b7D933Cc7dC14D3550De8848B73Fe430906Af42"; 
+window.web3=await new Web3(window.ethereum);
+window.contract=await new window.web3.eth.Contract(ABI,address);
+document.getElementById("contrcatStatus").innerHTML="Sucessfully Connected";
+}
+const getuIDR = async () => {
+  const milID = document.getElementById("milkNum").value;
+  const uID = await window.contract.methods.getUniquemilkID(milID).call();
+  document.getElementById("milkArea").innerHTML = uID;
+};
+    </script>
+  </body>
+  </html>
+
+
